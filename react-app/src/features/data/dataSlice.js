@@ -5,7 +5,7 @@ import { getBaseUrl } from '../../environment';
 let dataController;
 let dataPromise;
 
-export const getData = createAsyncThunk('getData', async (fips, date, aggregate) => {
+export const getData = createAsyncThunk('getData', async ({ fips, date, aggregate }) => {
   // Cancel the last data fetch.
   if (dataPromise) {
     dataController.abort();
@@ -13,7 +13,11 @@ export const getData = createAsyncThunk('getData', async (fips, date, aggregate)
   dataController = new AbortController();
 
   // Fetch the data.
-  dataPromise = fetch(`${getBaseUrl()}/get-data`, {
+  let url = `${getBaseUrl()}/get-data`;
+  if (fips === 'states') {
+    url = `${getBaseUrl()}/get-all-state-data-for-date`;
+  }
+  dataPromise = fetch(url, {
     headers: new Headers({
       'content-type': 'application/json',
     }),
@@ -35,7 +39,7 @@ export const getData = createAsyncThunk('getData', async (fips, date, aggregate)
 let filterController;
 let filterPromise;
 
-export const getMatchingFips = createAsyncThunk('getMatchingFips', async (filters, type) => {
+export const getMatchingFips = createAsyncThunk('getMatchingFips', async ({ filters, type }) => {
   // Cancel the last call.
   if (filterPromise) {
     filterController.abort();
