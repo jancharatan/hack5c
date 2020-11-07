@@ -35,6 +35,12 @@ const Map = ({ mapType }) => {
               const curFipsData = fipsData[curFips];
               const fipsCases = curFipsData ? curFipsData[0] : 0;
               const fipsDeaths = curFipsData ? curFipsData[1] : 0;
+
+              let fill = '#999999';
+              if (curFipsData) {
+                fill = casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths);
+              }
+
               return (
                 <Geography
                   key={geo.rsmKey}
@@ -42,7 +48,7 @@ const Map = ({ mapType }) => {
                   fill="#000"
                   style={{
                     default: {
-                      fill: casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths),
+                      fill,
                       stroke: '#000000',
                       strokeWidth: 0.75,
                       outline: 'none',
