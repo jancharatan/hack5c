@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import PropTypes from 'prop-types';
+import { scaleLinear } from 'd3-scale';
 import { setSelectedCountyFips, setSelectedUsState } from './mapSlice';
+import { getMaximums } from './processFipsData';
 
 const geoUrlCounties =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json';
@@ -19,40 +21,9 @@ const Map = ({ mapType }) => {
     return <div>No data was sent from the server!</div>;
   }
 
-  const getColorCases = (number) => {
-    if (number > 400000) {
-      return '#DC1C13';
-    }
-    if (number > 300000) {
-      return '#EA4C46';
-    }
-    if (number > 200000) {
-      return '#F07470';
-    }
-    if (number > 100000) {
-      return '#F1959B';
-    }
-    return '#F6BDC0';
-  };
-
-  const getColorDeaths = (number) => {
-    if (number > 10000) {
-      return '#0000FF';
-    }
-    if (number > 8000) {
-      return '#1F1FFF';
-    }
-    if (number > 6000) {
-      return '#4949FF';
-    }
-    if (number > 4000) {
-      return '#7879FF';
-    }
-    if (number > 2000) {
-      return '#A3A3FF';
-    }
-    return '#BFBFFF';
-  };
+  const [maxCases, maxDeaths] = getMaximums(fipsData);
+  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(['#ffedea', '#ff5233']);
+  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(['#BFBFFF', '#0000FF']);
 
   return (
     <ComposableMap projection="geoAlbersUsa">
@@ -70,7 +41,7 @@ const Map = ({ mapType }) => {
                   fill="#000"
                   style={{
                     default: {
-                      fill: casesNoDeaths ? getColorCases(fipsCases) : getColorDeaths(fipsDeaths),
+                      fill: casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths),
                       stroke: '#000000',
                       strokeWidth: 0.75,
                       outline: 'none',
