@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-bootstrap';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import { toggleMapType, toggleCasesNoDeaths, setDate } from '../map/mapSlice';
@@ -9,6 +8,7 @@ import 'antd/dist/antd.css';
 import Filter from './Filter';
 import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
+import CaseDeath from './CaseDeath';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -27,21 +27,21 @@ const Controls = () => {
   };
 
   const mapType = useSelector((state) => state.mapSlice.mapType);
+  const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
 
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Controls</h1>
-      <DatePicker
-        disabled={disabled}
-        format="YYYY-MM-DD"
-        disabledDate={setDisabledDate}
-        onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
-      />
-      <Button className="m-2" onClick={() => dispatch(toggleCasesNoDeaths())}>
-        Cases or Deaths
-      </Button>
-      <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
-
+      <div className="d-flex flex-row">
+        <DatePicker
+          disabled={disabled}
+          format="YYYY-MM-DD"
+          disabledDate={setDisabledDate}
+          onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
+        />
+        <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
+        <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
+      </div>
       <h2>Filters</h2>
       <FilterCategory title="Income" className="py-2">
         <Filter min={0} max={400} units="k USD" title="Median Annual Household Income" />
