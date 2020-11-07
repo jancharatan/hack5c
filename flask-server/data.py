@@ -33,6 +33,14 @@ counties_merged = counties_merged.dropna(subset=["fips"])
 states_merged = pd.merge(dems, states, how="left", on=["state"])
 states_merged = states_merged.dropna(subset=["fips"])
 
+# get info regarding population
+counties_merged[["cases", "deaths"]] = counties_merged[["cases", "deaths"]].div(
+    counties_merged.TotalPop, axis=0
+)
+states_merged[["cases", "deaths"]] = states_merged[["cases", "deaths"]].div(
+    states_merged.TotalPop, axis=0
+)
+
 # check to see if loading correctly:
 # counties_test = counties.head(10)
 # print(counties_test)
@@ -41,7 +49,7 @@ states_merged = states_merged.dropna(subset=["fips"])
 # my_date should be formatted correctly
 def get_date_all_county(my_date):
     county_map = {}
-    date_specific = counties[counties["date"] == my_date]
+    date_specific = counties_merged[counties_merged["date"] == my_date]
     for ind in date_specific.index:
         fips = date_specific["fips"][ind]
         cases = date_specific["cases"][ind]
@@ -57,7 +65,7 @@ def get_date_all_county(my_date):
 # same as above, but for states
 def get_date_all_states(my_date):
     state_map = {}
-    date_specific = states[states["date"] == my_date]
+    date_specific = states_merged[states_merged["date"] == my_date]
     for ind in date_specific.index:
         fips = date_specific["fips"][ind].item()
         cases = date_specific["cases"][ind].item()
