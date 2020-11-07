@@ -8,6 +8,7 @@ import { getData } from '../data/dataSlice';
 import 'antd/dist/antd.css';
 import Filter from './Filter';
 import FilterCategory from './FilterCategory';
+import StateCounty from './StateCounty';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Controls = () => {
     return current && (current < moment(startDate, 'YYYY-MM-DD') || current > moment(endDate, 'YYYY-MM-DD'));
   };
 
+  const mapType = useSelector((state) => state.mapSlice.mapType);
+
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll">
       <h1>Controls</h1>
@@ -37,6 +40,7 @@ const Controls = () => {
       <Button className="m-2" onClick={() => dispatch(toggleCasesNoDeaths())}>
         Cases or Deaths
       </Button>
+      <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
 
       <h2>Filters</h2>
       <FilterCategory title="Income" className="py-2">
