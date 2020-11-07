@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Controls from '../controls/Controls';
 import { getData } from '../data/dataSlice';
 import Map from '../map/Map';
+import FancyTitle from '../text/FancyTitle';
 
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
@@ -16,6 +17,7 @@ const Main = () => {
   return (
     <div className="w-100 h-100 d-flex flex-row">
       <div className="w-50 h-100">
+        <FancyTitle />
         <Map mapType={selectedMapType} />
       </div>
       <div className="w-50 h-100 p-5 overflow-hidden">

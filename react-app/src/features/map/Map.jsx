@@ -71,7 +71,7 @@ const Map = ({ mapType }) => {
                   style={{
                     default: {
                       fill: casesNoDeaths ? getColorCases(fipsCases) : getColorDeaths(fipsDeaths),
-                      stroke: '#607D8B',
+                      stroke: '#000000',
                       strokeWidth: 0.75,
                       outline: 'none',
                     },
