@@ -30,7 +30,7 @@ const Controls = () => {
 
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
-      <h1>Controls</h1>
+      <h1>Visualization Controls</h1>
       <DatePicker
         disabled={disabled}
         format="YYYY-MM-DD"
