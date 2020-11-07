@@ -12,10 +12,12 @@ import StateCounty from './StateCounty';
 
 const Controls = () => {
   const dispatch = useDispatch();
-  const selectedDate = useSelector((state) => state.mapSlice.date);
+
+  const disabled = useSelector((state) => state.mapSlice.dataFetchInProgress);
+
   const handleDatePickerChange = (date, dateString) => {
     dispatch(setDate(dateString));
-    dispatch(getData({ fips: 'states', date: selectedDate || '2020-11-05', aggregate: true }));
+    dispatch(getData({ fips: 'states', date: dateString || '2020-11-05', aggregate: true }));
   };
 
   const setDisabledDate = (current) => {
@@ -30,6 +32,7 @@ const Controls = () => {
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll">
       <h1>Controls</h1>
       <DatePicker
+        disabled={disabled}
         format="YYYY-MM-DD"
         disabledDate={setDisabledDate}
         onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
