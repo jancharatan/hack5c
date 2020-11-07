@@ -37,9 +37,6 @@ const Controls = () => {
         disabledDate={setDisabledDate}
         onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
       />
-      <Button className="m-2" onClick={() => dispatch(toggleMapType())}>
-        Toggle Map Type
-      </Button>
       <Button className="m-2" onClick={() => dispatch(toggleCasesNoDeaths())}>
         Cases or Deaths
       </Button>

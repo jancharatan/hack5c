@@ -21,7 +21,7 @@ const Map = ({ mapType }) => {
   }
 
   const colorScaleCases = scaleLinear().domain([0, 300000]).range(['#ffedea', '#ff5233']);
-  const colorScaleDeaths = scaleLinear().domain([0, 15000]).range(['#BFBFFF', '#0000FF']);
+  const colorScaleDeaths = scaleLinear().domain([0, 18000]).range(['#BFBFFF', '#0000FF']);
 
   return (
     <ComposableMap projection="geoAlbersUsa">
