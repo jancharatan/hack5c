@@ -30,15 +30,42 @@ dems = dems.rename(columns={"State": "state", "County": "county"})
 counties_merged = pd.merge(dems, counties, how="left", on=["state", "county"])
 counties_merged = counties_merged.dropna(subset=["fips"])
 # merge demographic info w states
-states_merged = pd.merge(dems, states, how="left", on=["state"])
+state_dems = dems
+# get absolute numbers from counties
+state_dems[["Hispanic", "White", "Black", "Native", "Asian", "Pacific"]] = state_dems[
+    ["Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
+].mul(state_dems.TotalPop, axis=0)
+# groupby state
+state_dems = (
+    state_dems.groupby(["state"])[
+        "TotalPop",
+        "Men",
+        "Women",
+        "Hispanic",
+        "White",
+        "Black",
+        "Native",
+        "Asian",
+        "Pacific",
+        "Income",
+    ]
+    .sum()
+    .reset_index()
+)
+
+states_merged = pd.merge(state_dems, states, how="left", on=["state"])
+states_merged[
+    ["cases", "deaths", "Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
+] = states_merged[
+    ["cases", "deaths", "Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
+].div(
+    states_merged.TotalPop, axis=0
+)
 states_merged = states_merged.dropna(subset=["fips"])
 
 # get info regarding population
 counties_merged[["cases", "deaths"]] = counties_merged[["cases", "deaths"]].div(
     counties_merged.TotalPop, axis=0
-)
-states_merged[["cases", "deaths"]] = states_merged[["cases", "deaths"]].div(
-    states_merged.TotalPop, axis=0
 )
 
 # check to see if loading correctly:
@@ -66,6 +93,7 @@ def get_date_all_county(my_date):
 def get_date_all_states(my_date):
     state_map = {}
     date_specific = states_merged[states_merged["date"] == my_date]
+    print(date_specific)
     for ind in date_specific.index:
         fips = date_specific["fips"][ind].item()
         cases = date_specific["cases"][ind].item()
