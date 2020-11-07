@@ -6,6 +6,7 @@ import Map from '../map/Map';
 import FancyTitle from '../text/FancyTitle';
 import MapKey from '../map/MapKey';
 import LinkControls from '../links/LinkControls';
+import { START_DAY } from '../../environment';
 
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
@@ -13,7 +14,7 @@ const Main = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getData({ fips: 'states', date: selectedDate || '2020-11-05', aggregate: true }));
+    dispatch(getData({ fips: 'states', date: selectedDate || START_DAY, aggregate: true }));
   }, []);
 
   return (

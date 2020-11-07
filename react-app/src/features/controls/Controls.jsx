@@ -9,6 +9,7 @@ import Filter from './Filter';
 import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
 import CaseDeath from './CaseDeath';
+import { START_DAY } from '../../environment';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -32,12 +33,13 @@ const Controls = () => {
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Visualization Controls</h1>
-      <div className="d-flex flex-row">
+      <div className="d-flex flex-row mb-4">
         <DatePicker
           disabled={disabled}
           format="YYYY-MM-DD"
           disabledDate={setDisabledDate}
           onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
+          defaultValue={moment(START_DAY, 'YYYY-MM-DD')}
         />
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
         <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
