@@ -12,6 +12,10 @@ body,
 );
 }
 
+$theme-colors: (
+  "primary": #d4e6ff,
+);
+
 @import 'node_modules/bootstrap/scss/bootstrap';
 
 h1 {
