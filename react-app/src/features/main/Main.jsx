@@ -6,10 +6,11 @@ import Map from '../map/Map';
 
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
+  const selectedDate = useSelector((state) => state.mapSlice.date);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getData({ fips: 'states', date: '2020-11-05', aggregate: true }));
+    dispatch(getData({ fips: 'states', date: selectedDate || '2020-11-05', aggregate: true }));
   }, []);
 
   return (
