@@ -14,7 +14,7 @@ const Map = ({ mapType }) => {
   const dispatch = useDispatch();
   return (
     <ComposableMap projection="geoAlbersUsa">
-      <Geographies geography={mapType === 'states' ? geoUrlStates : geoUrlCounties}>
+      <Geographies geography={mapType ? geoUrlStates : geoUrlCounties}>
         {
           ({ geographies }) =>
             geographies.map((geo) => (
@@ -53,7 +53,7 @@ const Map = ({ mapType }) => {
 };
 
 Map.propTypes = {
-  mapType: PropTypes.string.isRequired,
+  mapType: PropTypes.bool.isRequired,
 };
 
 export default Map;
