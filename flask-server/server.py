@@ -21,3 +21,9 @@ def example_post_route():
 def date_post_route():
     date = request.json["date"]
     return {"message": f"You asked for the date {date}!"}
+
+@app.route("/get-county-data", methods=["POST"])
+def county_post_route():
+    county = request.json["county"]
+    return {"message": f"You asked for the date {county}!"}
+

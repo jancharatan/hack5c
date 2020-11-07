@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const mapSlice = createSlice({
   name: 'mapSlice',
   initialState: {
+    mapType: true,
     selectedUsState: undefined,
     selectedCountyFips: undefined,
   },
@@ -14,9 +15,12 @@ const mapSlice = createSlice({
     setSelectedCountyFips(state, { payload }) {
       state.selectedCountyFips = payload;
     },
+    toggleMapType(state) {
+      state.mapType = !state.mapType;
+    },
   },
 });
 
-export const { setSelectedUsState, setSelectedCountyFips } = mapSlice.actions;
+export const { setSelectedUsState, setSelectedCountyFips, toggleMapType } = mapSlice.actions;
 
 export default mapSlice.reducer;

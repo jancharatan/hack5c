@@ -1,8 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import PropTypes from 'prop-types';
-import { setSelectedCountyFips } from './mapSlice';
+import { setSelectedCountyFips, setSelectedUsState } from './mapSlice';
 
 const geoUrlCounties =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json';
@@ -12,9 +12,10 @@ const geoUrlStates =
 
 const Map = ({ mapType }) => {
   const dispatch = useDispatch();
+  const selectedMapType = useSelector((state) => state.mapSlice.mapType);
   return (
     <ComposableMap projection="geoAlbersUsa">
-      <Geographies geography={mapType === 'states' ? geoUrlStates : geoUrlCounties}>
+      <Geographies geography={mapType ? geoUrlStates : geoUrlCounties}>
         {
           ({ geographies }) =>
             geographies.map((geo) => (
@@ -42,7 +43,11 @@ const Map = ({ mapType }) => {
                     outline: 'none',
                   },
                 }}
-                onClick={() => dispatch(setSelectedCountyFips(geo.id))}
+                onClick={
+                  selectedMapType
+                    ? () => () => dispatch(setSelectedUsState(geo.id))
+                    : dispatch(setSelectedCountyFips(geo.id))
+                }
               />
             ))
           // eslint-disable-next-line react/jsx-curly-newline
@@ -53,7 +58,7 @@ const Map = ({ mapType }) => {
 };
 
 Map.propTypes = {
-  mapType: PropTypes.string.isRequired,
+  mapType: PropTypes.bool.isRequired,
 };
 
 export default Map;
