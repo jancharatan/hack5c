@@ -5,10 +5,10 @@ import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 const CaseDeath = ({ value, setValue }) => (
   <div className="ml-2">
     <ToggleButtonGroup type="checkbox" value={value} onChange={setValue}>
-      <ToggleButton value disabled={value}>
+      <ToggleButton style={{ boxShadow: 'none' }} value disabled={value}>
         Show Cases
       </ToggleButton>
-      <ToggleButton value={false} disabled={!value}>
+      <ToggleButton style={{ boxShadow: 'none' }} value={false} disabled={!value}>
         Show Deaths
       </ToggleButton>
     </ToggleButtonGroup>

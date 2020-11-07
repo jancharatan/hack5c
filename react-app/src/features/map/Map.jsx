@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
 import { setSelectedCountyFips, setSelectedUsState } from './mapSlice';
@@ -27,56 +27,58 @@ const Map = ({ mapType }) => {
 
   return (
     <ComposableMap projection="geoAlbersUsa">
-      <Geographies geography={mapType ? geoUrlStates : geoUrlCounties}>
-        {
-          ({ geographies }) =>
-            geographies.map((geo) => {
-              const curFips = parseInt(geo.properties.fips_state, 10);
-              const curFipsData = fipsData[curFips];
-              const fipsCases = curFipsData ? curFipsData[0] : 0;
-              const fipsDeaths = curFipsData ? curFipsData[1] : 0;
+      <ZoomableGroup>
+        <Geographies geography={mapType ? geoUrlStates : geoUrlCounties}>
+          {
+            ({ geographies }) =>
+              geographies.map((geo) => {
+                const curFips = parseInt(geo.properties.fips_state, 10);
+                const curFipsData = fipsData[curFips];
+                const fipsCases = curFipsData ? curFipsData[0] : 0;
+                const fipsDeaths = curFipsData ? curFipsData[1] : 0;
 
-              let fill = '#999999';
-              if (curFipsData) {
-                fill = casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths);
-              }
+                let fill = '#999999';
+                if (curFipsData) {
+                  fill = casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths);
+                }
 
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#000"
-                  style={{
-                    default: {
-                      fill,
-                      stroke: '#000000',
-                      strokeWidth: 0.75,
-                      outline: 'none',
-                    },
-                    hover: {
-                      fill: '#607D8B',
-                      stroke: '#607D8B',
-                      strokeWidth: 0.75,
-                      outline: 'none',
-                    },
-                    pressed: {
-                      fill: '#FF5722',
-                      stroke: '#607D8B',
-                      strokeWidth: 0.75,
-                      outline: 'none',
-                    },
-                  }}
-                  onClick={
-                    selectedMapType
-                      ? () => () => dispatch(setSelectedUsState(geo.id))
-                      : dispatch(setSelectedCountyFips(geo.id))
-                  }
-                />
-              );
-            })
-          // eslint-disable-next-line react/jsx-curly-newline
-        }
-      </Geographies>
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill="#000"
+                    style={{
+                      default: {
+                        fill,
+                        stroke: '#000000',
+                        strokeWidth: 0.75,
+                        outline: 'none',
+                      },
+                      hover: {
+                        fill: '#607D8B',
+                        stroke: '#607D8B',
+                        strokeWidth: 0.75,
+                        outline: 'none',
+                      },
+                      pressed: {
+                        fill: '#FF5722',
+                        stroke: '#607D8B',
+                        strokeWidth: 0.75,
+                        outline: 'none',
+                      },
+                    }}
+                    onClick={
+                      selectedMapType
+                        ? () => () => dispatch(setSelectedUsState(geo.id))
+                        : dispatch(setSelectedCountyFips(geo.id))
+                    }
+                  />
+                );
+              })
+            // eslint-disable-next-line react/jsx-curly-newline
+          }
+        </Geographies>
+      </ZoomableGroup>
     </ComposableMap>
   );
 };

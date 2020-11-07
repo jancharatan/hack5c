@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker } from 'antd';
 import moment from 'moment';
+import { Button } from 'react-bootstrap';
 import { toggleMapType, toggleCasesNoDeaths, setDate } from '../map/mapSlice';
 import { getData } from '../data/dataSlice';
 import 'antd/dist/antd.css';
@@ -13,6 +14,13 @@ import { START_DAY } from '../../environment';
 
 const Controls = () => {
   const dispatch = useDispatch();
+
+  const [income, setIncome] = useState([0, 400]);
+  const [white, setWhite] = useState([0, 100]);
+  const [black, setBlack] = useState([0, 100]);
+  const [hispanic, setHispanic] = useState([0, 100]);
+  const [asian, setAsian] = useState([0, 100]);
+  const [nativeAm, setNativeAm] = useState([0, 100]);
 
   const disabled = useSelector((state) => state.mapSlice.dataFetchInProgress);
 
@@ -44,16 +52,57 @@ const Controls = () => {
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
         <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
       </div>
-      <h2>Filters</h2>
+      <div className="d-flex flow-row">
+        <h2>Filters</h2>
+        <Button className="ml-2" size="sm">
+          {' '}
+          Visualize using these filters
+        </Button>
+      </div>
       <FilterCategory title="Income" className="py-2">
-        <Filter min={0} max={400} units="k USD" title="Median Annual Household Income" />
+        <Filter
+          value={income}
+          setValue={() => setIncome(income)}
+          min={0}
+          max={400}
+          units="k USD"
+          title="Median Annual Household Income"
+        />
       </FilterCategory>
       <FilterCategory title="Race and Ethnicity" className="pt-2">
-        <Filter min={0} max={100} units="%" title="White Population" />
-        <Filter min={0} max={100} units="%" title="Black/African American Population" />
-        <Filter min={0} max={100} units="%" title="Hispanic Population" />
-        <Filter min={0} max={100} units="%" title="Asian American Population" />
-        <Filter min={0} max={100} units="%" title="Native American Population" />
+        <Filter value={white} setValue={() => setWhite} min={0} max={100} units="%" title="White Population" />
+        <Filter
+          value={black}
+          setValue={() => setBlack(black)}
+          min={0}
+          max={100}
+          units="%"
+          title="Black/African American Population"
+        />
+        <Filter
+          value={hispanic}
+          setValue={() => setHispanic(hispanic)}
+          min={0}
+          max={100}
+          units="%"
+          title="Hispanic Population"
+        />
+        <Filter
+          value={asian}
+          setValue={() => setAsian(asian)}
+          min={0}
+          max={100}
+          units="%"
+          title="Asian American Population"
+        />
+        <Filter
+          value={nativeAm}
+          setValue={() => setNativeAm(nativeAm)}
+          min={0}
+          max={100}
+          units="%"
+          title="Native American Population"
+        />
       </FilterCategory>
     </div>
   );
