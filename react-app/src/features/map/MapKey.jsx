@@ -15,7 +15,7 @@ const MapKey = () => {
 
   const colorFunction = selectedMapType ? colorScaleCases : colorScaleDeaths;
   const maxValue = selectedMapType ? maxCases : maxDeaths;
-  const text = selectedMapType ? 'Cases' : 'Deaths';
+  const text = selectedMapType ? 'Cases (per 100,000)' : 'Deaths (per 100,000)';
 
   const numGradations = 5;
   const content = [];
@@ -24,7 +24,7 @@ const MapKey = () => {
     content.push(
       <>
         <div className="m-2" style={{ width: '10px', height: '10px', backgroundColor: colorFunction(value) }} />
-        <div>{Math.round(value * 100000) / 100}</div>
+        <div>{Math.round(value * 10000000) / 100}</div>
       </>
     );
   }
