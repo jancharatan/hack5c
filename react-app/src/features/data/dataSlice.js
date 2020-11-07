@@ -5,7 +5,7 @@ import { getBaseUrl } from '../../environment';
 let dataController;
 let dataPromise;
 
-export const getData = createAsyncThunk('getData', async ({ fips, date, aggregate }) => {
+export const getData = createAsyncThunk('getData', async (selection) => {
   // Cancel the last data fetch.
   if (dataPromise) {
     dataController.abort();
@@ -13,19 +13,13 @@ export const getData = createAsyncThunk('getData', async ({ fips, date, aggregat
   dataController = new AbortController();
 
   // Fetch the data.
-  let url = `${getBaseUrl()}/get-data`;
-  if (fips === 'states') {
-    url = `${getBaseUrl()}/get-all-state-data-for-date`;
-  }
-  dataPromise = fetch(url, {
+  dataPromise = fetch(`${getBaseUrl()}/data`, {
     headers: new Headers({
       'content-type': 'application/json',
     }),
     method: 'POST',
     body: JSON.stringify({
-      fips,
-      date,
-      aggregate,
+      selection,
     }),
     signal: dataController.signal,
   });
@@ -36,47 +30,12 @@ export const getData = createAsyncThunk('getData', async ({ fips, date, aggregat
   throw new Error('Fetching data failed.');
 });
 
-let filterController;
-let filterPromise;
-
-export const getMatchingFips = createAsyncThunk('getMatchingFips', async ({ filters, type }) => {
-  // Cancel the last call.
-  if (filterPromise) {
-    filterController.abort();
-  }
-  filterController = new AbortController();
-
-  // Fetch the matching FIPS codes.
-  filterPromise = fetch(`${getBaseUrl()}/get-matching-fips`, {
-    headers: new Headers({
-      'content-type': 'application/json',
-    }),
-    method: 'POST',
-    body: JSON.stringify({
-      filters,
-      type,
-    }),
-    signal: filterController.signal,
-  });
-  const result = await filterPromise;
-  if (result.ok) {
-    return result.json();
-  }
-  throw new Error('Getting matching FIPS failed.');
-});
-
 const dataSlice = createSlice({
   name: 'dataSlice',
   initialState: {
-    // Data
     dataFetchInProgress: false,
     dataError: undefined,
     dataByFips: undefined,
-
-    // Matching FIPS
-    matchingFipsInProgress: false,
-    matchingFips: undefined,
-    matchingFipsError: undefined,
   },
   extraReducers: {
     [getData.pending]: (state) => {
@@ -90,18 +49,6 @@ const dataSlice = createSlice({
     [getData.rejected]: (state) => {
       state.dataFetchInProgress = false;
       state.dataError = true;
-    },
-    [getMatchingFips.pending]: (state) => {
-      state.matchingFipsInProgress = true;
-      state.matchingFipsError = undefined;
-    },
-    [getMatchingFips.fulfilled]: (state, { payload }) => {
-      state.matchingFipsInProgress = false;
-      state.matchingFips = payload;
-    },
-    [getMatchingFips.rejected]: (state) => {
-      state.matchingFipsInProgress = false;
-      state.matchingFipsError = true;
     },
   },
 });

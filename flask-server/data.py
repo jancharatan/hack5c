@@ -78,11 +78,11 @@ def get_date_all_county(my_date):
     county_map = {}
     date_specific = counties_merged[counties_merged["date"] == my_date]
     for ind in date_specific.index:
-        fips = date_specific["fips"][ind]
-        cases = date_specific["cases"][ind]
-        deaths = date_specific["deaths"][ind]
+        fips = date_specific["fips"][ind].item()
+        cases = date_specific["cases"][ind].item()
+        deaths = date_specific["deaths"][ind].item()
         # print(fips, cases, deaths)
-        county_map[fips] = [cases, deaths]
+        county_map[str(fips)] = [cases, deaths]
     return county_map
 
 

@@ -21,30 +21,37 @@ const Controls = () => {
   const [hispanic, setHispanic] = useState([0, 100]);
   const [asian, setAsian] = useState([0, 100]);
   const [nativeAm, setNativeAm] = useState([0, 100]);
+  const [pacific, setPacific] = useState([0, 100]);
 
   const disabled = useSelector((state) => state.mapSlice.dataFetchInProgress);
+  const mapType = useSelector((state) => state.mapSlice.mapType);
+  const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
+  const date = useSelector((state) => state.mapSlice.date);
 
-  const handleDatePickerChange = (date, dateString) => {
+  const useFilters = () => {
+    const selection = {
+      date,
+      type: mapType ? 'states' : 'counties',
+      dataType: displayType ? 'cases' : 'deaths',
+      Hispanic: hispanic,
+      White: white,
+      Black: black,
+      Asian: asian,
+      Native: nativeAm,
+      Pacific: pacific,
+      // Income: income.map((x) => x * 1000),
+    };
+    dispatch(getData(selection));
+  };
+
+  const handleDatePickerChange = (a, dateString) => {
     dispatch(setDate(dateString));
-    dispatch(getData({ fips: 'states', date: dateString || '2020-11-05', aggregate: true }));
   };
 
   const setDisabledDate = (current) => {
     const startDate = '2020-03-17';
     const endDate = '2020-11-06';
     return current && (current < moment(startDate, 'YYYY-MM-DD') || current > moment(endDate, 'YYYY-MM-DD'));
-  };
-
-  const mapType = useSelector((state) => state.mapSlice.mapType);
-  const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
-
-  const useFilters = () => {
-    console.log(income);
-    console.log(white);
-    console.log(black);
-    console.log(hispanic);
-    console.log(asian);
-    console.log(nativeAm);
   };
 
   return (
@@ -55,7 +62,7 @@ const Controls = () => {
           disabled={disabled}
           format="YYYY-MM-DD"
           disabledDate={setDisabledDate}
-          onChange={(date, dateString) => handleDatePickerChange(date, dateString)}
+          onChange={(newDate, dateString) => handleDatePickerChange(newDate, dateString)}
           defaultValue={moment(START_DAY, 'YYYY-MM-DD')}
         />
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
@@ -118,6 +125,14 @@ const Controls = () => {
           max={100}
           units="%"
           title="Native American Population"
+        />
+        <Filter
+          value={pacific}
+          setValue={(newValue) => setPacific(newValue)}
+          min={0}
+          max={100}
+          units="%"
+          title="Pacific Islander Population"
         />
       </FilterCategory>
     </div>
