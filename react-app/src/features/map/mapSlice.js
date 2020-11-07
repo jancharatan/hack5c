@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const editorSlice = createSlice({
+const mapSlice = createSlice({
   name: 'mapSlice',
   initialState: {
     selectedUsState: undefined,
@@ -17,6 +17,6 @@ const editorSlice = createSlice({
   },
 });
 
-export const { setSelectedUsState, setSelectedCountyFips } = editorSlice.actions;
+export const { setSelectedUsState, setSelectedCountyFips } = mapSlice.actions;
 
-export default editorSlice.reducer;
+export default mapSlice.reducer;
