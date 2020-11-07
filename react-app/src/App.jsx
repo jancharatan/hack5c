@@ -14,7 +14,7 @@ function App() {
     <Provider store={store}>
       <div className="App w-100 h-100 d-flex flex-column">
         <Header />
-        <div className="d-flex flex-grow-1">
+        <div className="d-flex flex-grow-1 overflow-hidden">
           <Main />
         </div>
       </div>

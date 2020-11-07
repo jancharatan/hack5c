@@ -18,7 +18,7 @@ const Main = () => {
       <div className="w-50 h-100">
         <Map mapType={selectedMapType} />
       </div>
-      <div className="w-50 h-100 p-5">
+      <div className="w-50 h-100 p-5 overflow-hidden">
         <Controls />
       </div>
     </div>
