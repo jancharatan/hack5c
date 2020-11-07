@@ -2,17 +2,17 @@
 import React from 'react';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
-const StateCounty = ({ value, setValue }) => (
+const CaseDeath = ({ value, setValue }) => (
   <div className="ml-2">
     <ToggleButtonGroup type="checkbox" value={value} onChange={setValue}>
       <ToggleButton value disabled={value}>
-        Show States
+        Show Cases
       </ToggleButton>
       <ToggleButton value={false} disabled={!value}>
-        Show Counties
+        Show Deaths
       </ToggleButton>
     </ToggleButtonGroup>
   </div>
 );
 
-export default StateCounty;
+export default CaseDeath;
