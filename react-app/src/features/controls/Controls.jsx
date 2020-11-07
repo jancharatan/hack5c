@@ -38,6 +38,15 @@ const Controls = () => {
   const mapType = useSelector((state) => state.mapSlice.mapType);
   const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
 
+  const useFilters = () => {
+    console.log(income);
+    console.log(white);
+    console.log(black);
+    console.log(hispanic);
+    console.log(asian);
+    console.log(nativeAm);
+  };
+
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Visualization Controls</h1>
@@ -54,7 +63,7 @@ const Controls = () => {
       </div>
       <div className="d-flex flow-row">
         <h2>Filters</h2>
-        <Button className="ml-2" size="sm">
+        <Button onClick={useFilters} className="ml-2" size="sm">
           {' '}
           Visualize using these filters
         </Button>
@@ -62,7 +71,7 @@ const Controls = () => {
       <FilterCategory title="Income" className="py-2">
         <Filter
           value={income}
-          setValue={() => setIncome(income)}
+          setValue={(newValue) => setIncome(newValue)}
           min={0}
           max={400}
           units="k USD"
@@ -70,10 +79,17 @@ const Controls = () => {
         />
       </FilterCategory>
       <FilterCategory title="Race and Ethnicity" className="pt-2">
-        <Filter value={white} setValue={() => setWhite} min={0} max={100} units="%" title="White Population" />
+        <Filter
+          value={white}
+          setValue={(newValue) => setWhite(newValue)}
+          min={0}
+          max={100}
+          units="%"
+          title="White Population"
+        />
         <Filter
           value={black}
-          setValue={() => setBlack(black)}
+          setValue={(newValue) => setBlack(newValue)}
           min={0}
           max={100}
           units="%"
@@ -81,7 +97,7 @@ const Controls = () => {
         />
         <Filter
           value={hispanic}
-          setValue={() => setHispanic(hispanic)}
+          setValue={(newValue) => setHispanic(newValue)}
           min={0}
           max={100}
           units="%"
@@ -89,7 +105,7 @@ const Controls = () => {
         />
         <Filter
           value={asian}
-          setValue={() => setAsian(asian)}
+          setValue={(newValue) => setAsian(newValue)}
           min={0}
           max={100}
           units="%"
@@ -97,7 +113,7 @@ const Controls = () => {
         />
         <Filter
           value={nativeAm}
-          setValue={() => setNativeAm(nativeAm)}
+          setValue={(newValue) => setNativeAm(newValue)}
           min={0}
           max={100}
           units="%"

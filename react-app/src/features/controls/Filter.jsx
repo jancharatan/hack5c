@@ -14,15 +14,7 @@ const Filter = ({ min, max, units, title, props, setValue, value }) => {
     <div {...props}>
       <div>{title}</div>
       <div className="px-3 pb-2">
-        <Slider
-          range
-          value={value}
-          onAfterChange={setValue}
-          marks={marks}
-          min={min}
-          max={max}
-          defaultValue={[min, max]}
-        />
+        <Slider range value={value} onChange={setValue} marks={marks} min={min} max={max} defaultValue={[min, max]} />
       </div>
     </div>
   );
