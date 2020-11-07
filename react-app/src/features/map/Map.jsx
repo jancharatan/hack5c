@@ -1,18 +1,22 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import PropTypes from 'prop-types';
 import { setSelectedCountyFips } from './mapSlice';
 
-const geoUrl =
+const geoUrlCounties =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json';
 
-const Map = () => {
+const geoUrlStates =
+  'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers.json';
+
+const Map = ({ mapType }) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-50 h-100">
+    <div className="w-50 h-50">
       <div>
         <ComposableMap projection="geoAlbersUsa">
-          <Geographies geography={geoUrl}>
+          <Geographies geography={mapType === 'states' ? geoUrlStates : geoUrlCounties}>
             {
               ({ geographies }) =>
                 geographies.map((geo) => (
@@ -51,4 +55,9 @@ const Map = () => {
     </div>
   );
 };
+
+Map.propTypes = {
+  mapType: PropTypes.string.isRequired,
+};
+
 export default Map;

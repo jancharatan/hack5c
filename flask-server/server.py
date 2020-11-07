@@ -16,3 +16,8 @@ def say_hello():
 def example_post_route():
     state = request.json["state"]
     return {"message": f"You asked for the state {state}!"}
+
+@app.route("/get-date-data", methods=["POST"])
+def date_post_route():
+    date = request.json["date"]
+    return {"message": f"You asked for the date {date}!"}
