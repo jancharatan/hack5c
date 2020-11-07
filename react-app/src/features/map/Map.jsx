@@ -4,6 +4,7 @@ import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
 import { setSelectedCountyFips, setSelectedUsState } from './mapSlice';
+import { getMaximums } from './processFipsData';
 
 const geoUrlCounties =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json';
@@ -20,8 +21,9 @@ const Map = ({ mapType }) => {
     return <div>No data was sent from the server!</div>;
   }
 
-  const colorScaleCases = scaleLinear().domain([0, 300000]).range(['#ffedea', '#ff5233']);
-  const colorScaleDeaths = scaleLinear().domain([0, 18000]).range(['#BFBFFF', '#0000FF']);
+  const [maxCases, maxDeaths] = getMaximums(fipsData);
+  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(['#ffedea', '#ff5233']);
+  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(['#BFBFFF', '#0000FF']);
 
   return (
     <ComposableMap projection="geoAlbersUsa">
