@@ -152,7 +152,7 @@ def getMatchingFips(constraints, toggle):
         & (left_merged.Income <= Income[1])
     ]
 
-    return list(set(sorted_data["fips"]))
+    return {"data": list(set(sorted_data["fips"]))}
 
 
 # print(getMatchingFips({'Asian' : [10, 20], 'White' : [30, 100]}, 'county'))
