@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "airbnb",
+    "prettier",
+    "esnext"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error"
+    ],
+    "import/no-namespace": [
+      "off"
+    ]
+  }
+}
