@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;900&display=swap');
 
 $stroke: #0d1b1e;
 $shadow: #cccccc;
@@ -18,11 +18,17 @@ $halftone: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKL
 .heading {
   font-size: $size;
   font-family: 'Roboto Slab';
-  font-weight: 400;
+  font-weight: 900;
 
 	@include stroke-width(2px);
   @include stroke-color($stroke);
   color: transparent;
 
   text-shadow: 4px 4px $shadow;
+}
+
+.subheading {
+  font-size: 1rem;
+  font-family: 'Roboto Slab';
+  font-weight: 500;
 }

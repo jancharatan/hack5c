@@ -17,7 +17,7 @@ const Main = () => {
 
   return (
     <div className="w-100 h-100 d-flex flex-row">
-      <div className="w-50 h-100">
+      <div className="w-50 h-100 d-flex flex-column">
         <FancyTitle />
         <MapKey />
         <Map mapType={selectedMapType} />

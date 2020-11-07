@@ -5,9 +5,9 @@ import { scaleLinear } from 'd3-scale';
 const MapKey = () => {
   const colorScaleCases = scaleLinear().domain([0, 300000]).range(['#ffedea', '#ff5233']);
   const colorScaleDeaths = scaleLinear().domain([0, 18000]).range(['#BFBFFF', '#0000FF']);
-  const selectedMapType = useSelector((state) => state.mapSlice.mapType);
+  const selectedMapType = useSelector((state) => state.mapSlice.casesNoDeaths);
   return (
-    <div className="px-5">
+    <div className="mx-5 px-2 border rounded" style={{ backgroundColor: 'white' }}>
       {selectedMapType ? (
         <div className="d-flex flex-row">
           <div style={{ fontWeight: 'bold' }}>Cases</div>
