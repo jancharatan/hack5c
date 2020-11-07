@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import './App.css';
 import { Provider } from 'react-redux';
 import Header from './features/header/Header';
 import Main from './features/main/Main';
@@ -13,9 +12,11 @@ const store = configureStore({
 function App() {
   return (
     <Provider store={store}>
-      <div className="App w-100 h-100">
+      <div className="App w-100 h-100 d-flex flex-column">
         <Header />
-        <Main />
+        <div className="d-flex flex-grow-1">
+          <Main />
+        </div>
       </div>
     </Provider>
   );
