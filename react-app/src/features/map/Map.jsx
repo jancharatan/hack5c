@@ -32,8 +32,9 @@ const Map = ({ mapType }) => {
           ({ geographies }) =>
             geographies.map((geo) => {
               const curFips = parseInt(geo.properties.fips_state, 10);
-              const fipsCases = fipsData[curFips][0];
-              const fipsDeaths = fipsData[curFips][1];
+              const curFipsData = fipsData[curFips];
+              const fipsCases = curFipsData ? curFipsData[0] : 0;
+              const fipsDeaths = curFipsData ? curFipsData[1] : 0;
               return (
                 <Geography
                   key={geo.rsmKey}
