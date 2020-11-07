@@ -29,7 +29,7 @@ const Controls = () => {
   const mapType = useSelector((state) => state.mapSlice.mapType);
 
   return (
-    <div className="w-100 h-100 rounded border p-3 overflow-y-scroll">
+    <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Controls</h1>
       <DatePicker
         disabled={disabled}

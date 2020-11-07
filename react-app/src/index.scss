@@ -5,6 +5,13 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  background: repeating-linear-gradient(
+  -45deg,
+    #fafafa,
+    #fafafa 10px,
+    #fff 10px,
+    #fff 20px
+);
 }
 
 @import 'node_modules/bootstrap/scss/bootstrap';
