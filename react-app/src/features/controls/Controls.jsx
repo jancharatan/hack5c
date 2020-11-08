@@ -132,7 +132,7 @@ const Controls = (props) => {
 
   const setDisabledDate = (current) => {
     const startDate = '2020-03-17';
-    const endDate = '2020-11-06';
+    const endDate = '2020-11-05';
     return current && (current < moment(startDate, 'YYYY-MM-DD') || current > moment(endDate, 'YYYY-MM-DD'));
   };
 
