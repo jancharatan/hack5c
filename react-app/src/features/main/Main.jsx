@@ -5,15 +5,19 @@ import Controls from '../controls/Controls';
 import Map from '../map/Map';
 import FancyTitle from '../text/FancyTitle';
 import MapKey from '../map/MapKey';
+import CaptionOverlay from '../links/CaptionOverlay';
 
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
+  const caption = useSelector((state) => state.mapSlice.caption);
+  const title = useSelector((state) => state.mapSlice.title);
   const NYTdata = <a href="https://github.com/nytimes/covid-19-data">NYT Covid dataset</a>;
   const censusData = <a href="https://github.com/ryanschaub/US-Census-Demographic-Data">Census demographics dataset</a>;
 
   return (
     <div className="w-100 h-100 d-flex flex-row">
       <div className="w-50 h-100 d-flex flex-column">
+        {caption && title ? <CaptionOverlay title={title} caption={caption} /> : null}
         <FancyTitle />
         <MapKey />
         <Map mapType={selectedMapType} />

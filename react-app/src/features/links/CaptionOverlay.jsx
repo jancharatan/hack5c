@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../text/FancyTitle.scss';
 
 const CaptionOverlay = ({ title, caption }) => (
-  <div style={{ position: 'absolute', top: 0, left: 0 }}>
-    <div>{title}</div>
-    <div>{caption}</div>
+  <div style={{ position: 'absolute', top: 250, left: 50, maxWidth: 500 }}>
+    <div className="heading" style={{ fontSize: '30pt', fontWeight: 'bolder' }}>
+      {title}
+    </div>
+    <div style={{ backgroundColor: 'lightgrey' }}>{caption}</div>
   </div>
 );
 
