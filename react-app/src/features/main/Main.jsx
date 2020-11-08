@@ -21,7 +21,7 @@ const Main = () => {
           For this project, we used data from the {NYTdata} and a {censusData}.
         </div>
       </div>
-      <div className="w-50 h-100 overflow-hidden p-5">
+      <div className="w-50 h-100 overflow-hidden pr-5 py-5">
         <div className="d-flex flex-column h-100 w-100 overflow-hidden">
           <Controls />
         </div>
