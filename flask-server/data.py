@@ -32,9 +32,13 @@ counties_merged = counties_merged.dropna(subset=["fips"])
 # merge demographic info w states
 state_dems = dems
 # get absolute numbers from counties
-state_dems[["Hispanic", "White", "Black", "Native", "Asian", "Pacific"]] = state_dems[
-    ["Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
-].mul(state_dems.TotalPop, axis=0)
+state_dems[
+    ["Hispanic", "White", "Black", "Native", "Asian", "Pacific", "Income"]
+] = state_dems[
+    ["Hispanic", "White", "Black", "Native", "Asian", "Pacific", "Income"]
+].mul(
+    state_dems.TotalPop, axis=0
+)
 # groupby state
 state_dems = (
     state_dems.groupby(["state"])[
@@ -113,7 +117,7 @@ def get_date_all_county(my_date):
 def get_date_all_states(my_date):
     state_map = {}
     date_specific = states_merged[states_merged["date"] == my_date]
-    print(date_specific)
+    #   print(date_specific)
     for ind in date_specific.index:
         fips = date_specific["fips"][ind].item()
         cases = date_specific["cases"][ind].item()
