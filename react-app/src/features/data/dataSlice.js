@@ -37,6 +37,14 @@ const dataSlice = createSlice({
     dataError: undefined,
     dataByFips: undefined,
   },
+  reducers: {
+    setDataFetchInProgress(state, { payload }) {
+      state.dataFetchInProgress = payload;
+    },
+    setDataByFips(state, { payload }) {
+      state.dataByFips = payload;
+    },
+  },
   extraReducers: {
     [getData.pending]: (state) => {
       state.dataFetchInProgress = true;
@@ -52,5 +60,7 @@ const dataSlice = createSlice({
     },
   },
 });
+
+export const { setDataFetchInProgress, setDataByFips } = dataSlice.actions;
 
 export default dataSlice.reducer;

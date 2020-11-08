@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { getBaseUrl, getFrontendBaseUrl } from '../../environment';
 import CommentModal from './CommentModal';
 
-const LinkControls = () => {
+const LinkControls = ({ getSelection }) => {
   const [disabled, setDisabled] = useState(false);
   const [link, setLink] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
@@ -16,7 +17,7 @@ const LinkControls = () => {
       }),
       method: 'POST',
       body: JSON.stringify({
-        settings: { test: 'a' },
+        selection: getSelection(),
       }),
     })
       .then((a) => a.json())
