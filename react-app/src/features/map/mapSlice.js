@@ -6,16 +6,14 @@ const mapSlice = createSlice({
   initialState: {
     date: '2020-11-05',
     mapType: true,
-    selectedUsState: undefined,
-    selectedCountyFips: undefined,
     casesNoDeaths: true,
   },
   reducers: {
-    setSelectedUsState(state, { payload }) {
-      state.selectedUsState = payload;
+    setMapType(state, { payload }) {
+      state.mapType = payload;
     },
-    setSelectedCountyFips(state, { payload }) {
-      state.selectedCountyFips = payload;
+    setCaseDeathType(state, { payload }) {
+      state.casesNoDeaths = payload;
     },
     toggleMapType(state) {
       state.mapType = !state.mapType;
@@ -29,12 +27,6 @@ const mapSlice = createSlice({
   },
 });
 
-export const {
-  setSelectedUsState,
-  setSelectedCountyFips,
-  toggleMapType,
-  toggleCasesNoDeaths,
-  setDate,
-} = mapSlice.actions;
+export const { toggleMapType, toggleCasesNoDeaths, setDate, setMapType, setCaseDeathType } = mapSlice.actions;
 
 export default mapSlice.reducer;

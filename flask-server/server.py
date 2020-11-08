@@ -18,10 +18,7 @@ def get_vis_link():
     return {"link_id": link_id}
 
 
-@app.route("/data", methods=["POST"])
-def get_data():
-    selection = request.json.get("selection", {})
-
+def get_data_for_selection(selection):
     # Get the data.
     date = selection["date"]
     selection_type = selection.get("type", "states")
@@ -40,3 +37,16 @@ def get_data():
         result[str(int(float(fips_str)))] = data.get(fips_str, [0, 0])
 
     return result
+
+
+@app.route("/load-vis-link", methods=["POST"])
+def load_vis_link():
+    key = request.json["key"]
+    settings = tracker.get_visualization(key)
+    return {"settings": settings, "result": get_data_for_selection(settings)}
+
+
+@app.route("/data", methods=["POST"])
+def get_data():
+    selection = request.json.get("selection", {})
+    return get_data_for_selection(selection)

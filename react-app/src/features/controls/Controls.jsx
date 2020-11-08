@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
-import { toggleMapType, toggleCasesNoDeaths, setDate } from '../map/mapSlice';
-import { getData } from '../data/dataSlice';
+import { withRouter } from 'react-router-dom';
+import { toggleMapType, toggleCasesNoDeaths, setDate, setMapType, setCaseDeathType } from '../map/mapSlice';
+import { getData, setDataByFips, setDataFetchInProgress } from '../data/dataSlice';
 import 'antd/dist/antd.css';
 import Filter from './Filter';
 import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
 import CaseDeath from './CaseDeath';
-import { START_DAY } from '../../environment';
+import { getBaseUrl, START_DAY } from '../../environment';
 import LinkControls from '../links/LinkControls';
 
-const Controls = () => {
+const Controls = (props) => {
   const dispatch = useDispatch();
 
   const [income, setIncome] = useState([0, 124]);
@@ -23,6 +25,66 @@ const Controls = () => {
   const [asian, setAsian] = useState([0, 42]);
   const [nativeAm, setNativeAm] = useState([0, 93]);
   const [pacific, setPacific] = useState([0, 36]);
+
+  useEffect(() => {
+    // Disclaimer: This is not how you're supposed to do this.
+    // This retrieves the saved visualization from the server if there is one.
+    const key = (props?.location?.pathname ?? '').slice(1);
+    if (key) {
+      dispatch(setDataFetchInProgress(true));
+      // lmao it's an inline fetch
+      fetch(`${getBaseUrl()}/load-vis-link`, {
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+        method: 'POST',
+        body: JSON.stringify({
+          key,
+        }),
+      })
+        .then((r) => {
+          if (r.ok) {
+            return r.json();
+          }
+          // TODO: Make a modal/404
+          // eslint-disable-next-line no-alert
+          alert('Invalid visualization URL.');
+          return undefined;
+        })
+        .then((json) => {
+          // lmao this is so bad but whatever
+          const { result, settings } = json;
+
+          // make the chart data correct
+          dispatch(setDataByFips(result));
+          dispatch(setDataFetchInProgress(false));
+
+          // make the sliders correct
+          // TODO add income
+          setHispanic(settings.Hispanic);
+          setWhite(settings.White);
+          setBlack(settings.Black);
+          setAsian(settings.Asian);
+          setNativeAm(settings.Native);
+          setPacific(settings.Pacific);
+          dispatch(setDate(settings.date));
+          dispatch(setMapType(settings.type === 'states'));
+          dispatch(setCaseDeathType(settings.dataType === 'cases'));
+        })
+        .catch(() => {
+          // eslint-disable-next-line no-alert
+          alert('Invalid visualization URL.');
+        });
+    } else {
+      dispatch(
+        getData({
+          type: 'states',
+          date: START_DAY,
+          aggregate: true,
+        })
+      );
+    }
+  }, []);
 
   const disabled = useSelector((state) => state.mapSlice.dataFetchInProgress);
   const mapType = useSelector((state) => state.mapSlice.mapType);
@@ -146,4 +208,4 @@ const Controls = () => {
   );
 };
 
-export default Controls;
+export default withRouter(Controls);

@@ -10,7 +10,8 @@ class VisualizationTracker:
         return str(key)[:5]
 
     def get_visualization(self, key):
-        return self.visualizationSettings.get(key, "not found")
+        # throw if it's not found lmao
+        return self.visualizationSettings[key]
 
     def save_visualization(self, settings):
         # Find an unused key.
