@@ -37,6 +37,6 @@ def get_data():
     result = {}
     for fips in matching_fips["data"]:
         fips_str = str(fips)
-        result[str(int(float(fips_str)))] = data[fips_str]
+        result[str(int(float(fips_str)))] = data.get(fips_str, [0, 0])
 
     return result
