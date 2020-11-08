@@ -15,13 +15,13 @@ import { START_DAY } from '../../environment';
 const Controls = () => {
   const dispatch = useDispatch();
 
-  const [income, setIncome] = useState([0, 400]);
+  const [income, setIncome] = useState([0, 124]);
   const [white, setWhite] = useState([0, 100]);
-  const [black, setBlack] = useState([0, 100]);
+  const [black, setBlack] = useState([0, 86]);
   const [hispanic, setHispanic] = useState([0, 100]);
-  const [asian, setAsian] = useState([0, 100]);
-  const [nativeAm, setNativeAm] = useState([0, 100]);
-  const [pacific, setPacific] = useState([0, 100]);
+  const [asian, setAsian] = useState([0, 42]);
+  const [nativeAm, setNativeAm] = useState([0, 93]);
+  const [pacific, setPacific] = useState([0, 36]);
 
   const disabled = useSelector((state) => state.mapSlice.dataFetchInProgress);
   const mapType = useSelector((state) => state.mapSlice.mapType);
@@ -79,7 +79,7 @@ const Controls = () => {
           value={income}
           setValue={(newValue) => setIncome(newValue)}
           min={0}
-          max={400}
+          max={124}
           units="k USD"
           title="Median Annual Household Income"
         />
@@ -97,7 +97,7 @@ const Controls = () => {
           value={black}
           setValue={(newValue) => setBlack(newValue)}
           min={0}
-          max={100}
+          max={86}
           units="%"
           title="Black/African American Population"
         />
@@ -113,7 +113,7 @@ const Controls = () => {
           value={asian}
           setValue={(newValue) => setAsian(newValue)}
           min={0}
-          max={100}
+          max={42}
           units="%"
           title="Asian American Population"
         />
@@ -121,7 +121,7 @@ const Controls = () => {
           value={nativeAm}
           setValue={(newValue) => setNativeAm(newValue)}
           min={0}
-          max={100}
+          max={93}
           units="%"
           title="Native American Population"
         />
@@ -129,7 +129,7 @@ const Controls = () => {
           value={pacific}
           setValue={(newValue) => setPacific(newValue)}
           min={0}
-          max={100}
+          max={36}
           units="%"
           title="Pacific Islander Population"
         />
