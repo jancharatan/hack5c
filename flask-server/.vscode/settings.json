@@ -1,5 +1,5 @@
 {
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
-    "python.pythonPath": "flask-server-env/bin/python",
+    "python.pythonPath": "/Users/davidcharatan/Documents/Projects/hack5c/flask-server/flask-server-env/bin/python3.9",
 }
