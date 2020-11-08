@@ -41,8 +41,11 @@ const Map = ({ mapType }) => {
                 const fipsCases = curFipsData ? curFipsData[0] : 0;
                 const fipsDeaths = curFipsData ? curFipsData[1] : 0;
 
-                let fill = '#999999';
+                let fill = '#ffffff';
+                const strokeWidth = 0.75;
+                let stroke = '#bbbbbb';
                 if (curFipsData) {
+                  stroke = '#000000';
                   fill = casesNoDeaths ? colorScaleCases(fipsCases) : colorScaleDeaths(fipsDeaths);
                 }
 
@@ -54,8 +57,8 @@ const Map = ({ mapType }) => {
                     style={{
                       default: {
                         fill,
-                        stroke: '#000000',
-                        strokeWidth: 0.75,
+                        stroke,
+                        strokeWidth,
                         outline: 'none',
                       },
                     }}
