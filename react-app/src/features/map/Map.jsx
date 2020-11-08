@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
-import { setSelectedCountyFips, setSelectedUsState } from './mapSlice';
 import { getMaximums } from './processFipsData';
 
 const geoUrlCounties =
@@ -13,8 +12,6 @@ const geoUrlStates =
   'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers.json';
 
 const Map = ({ mapType }) => {
-  const dispatch = useDispatch();
-  const selectedMapType = useSelector((state) => state.mapSlice.mapType);
   const casesNoDeaths = useSelector((state) => state.mapSlice.casesNoDeaths);
   const fipsData = useSelector((state) => state.dataSlice.dataByFips);
   if (!fipsData) {
@@ -32,7 +29,7 @@ const Map = ({ mapType }) => {
           {
             ({ geographies }) =>
               geographies.map((geo) => {
-                const curFips = parseInt(geo.properties.fips_state, 10);
+                const curFips = mapType ? parseInt(geo.properties.fips_state, 10) : parseInt(geo.properties.fips, 10);
                 const curFipsData = fipsData[curFips];
                 const fipsCases = curFipsData ? curFipsData[0] : 0;
                 const fipsDeaths = curFipsData ? curFipsData[1] : 0;
@@ -54,24 +51,7 @@ const Map = ({ mapType }) => {
                         strokeWidth: 0.75,
                         outline: 'none',
                       },
-                      hover: {
-                        fill: '#607D8B',
-                        stroke: '#607D8B',
-                        strokeWidth: 0.75,
-                        outline: 'none',
-                      },
-                      pressed: {
-                        fill: '#FF5722',
-                        stroke: '#607D8B',
-                        strokeWidth: 0.75,
-                        outline: 'none',
-                      },
                     }}
-                    onClick={
-                      selectedMapType
-                        ? () => () => dispatch(setSelectedUsState(geo.id))
-                        : dispatch(setSelectedCountyFips(geo.id))
-                    }
                   />
                 );
               })

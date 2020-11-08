@@ -1,8 +1,7 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS
-from .data import get_date_all_states
-from .data import getMatchingFips
+from .data import getMatchingFips, get_date_all_states, get_date_all_county
 from .visualization_tracker import VisualizationTracker
 
 
@@ -12,11 +11,6 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 tracker = VisualizationTracker()
 
 
-@app.route("/hello", methods=["GET"])
-def say_hello():
-    return "Hello"
-
-
 @app.route("/get-vis-link", methods=["POST"])
 def get_vis_link():
     settings = request.json["settings"]
@@ -24,27 +18,25 @@ def get_vis_link():
     return {"link_id": link_id}
 
 
-@app.route("/get-all-state-data-for-date", methods=["POST"])
-def get_all_state_data_for_date():
-    date = request.json["date"]
-    return get_date_all_states(date)
+@app.route("/data", methods=["POST"])
+def get_data():
+    selection = request.json.get("selection", {})
 
+    # Get the data.
+    date = selection["date"]
+    selection_type = selection.get("type", "states")
+    if selection_type == "states":
+        data = get_date_all_states(date)
+    else:
+        data = get_date_all_county(date)
 
-@app.route("/get-all-data-for-constraints", methods=["POST"])
-def get_all_data_for_constraints():
-    constraints = request.json["constraints"]
-    # map_type should either be county or state
-    map_type = request.json["map_type"]
-    return getMatchingFips(constraints, map_type)
+    # Apply the filters.
+    matching_fips = getMatchingFips(
+        selection, "states" if selection_type == "states" else "county"
+    )
+    result = {}
+    for fips in matching_fips["data"]:
+        fips_str = str(fips)
+        result[str(int(float(fips_str)))] = data.get(fips_str, [0, 0])
 
-
-@app.route("/get-date-data", methods=["POST"])
-def date_post_route():
-    date = request.json["date"]
-    return {"message": f"You asked for the date {date}!"}
-
-
-@app.route("/get-county-data", methods=["POST"])
-def county_post_route():
-    county = request.json["county"]
-    return {"message": f"You asked for the date {county}!"}
+    return result

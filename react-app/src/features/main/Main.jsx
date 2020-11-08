@@ -10,11 +10,16 @@ import { START_DAY } from '../../environment';
 
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
-  const selectedDate = useSelector((state) => state.mapSlice.date);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getData({ fips: 'states', date: selectedDate || START_DAY, aggregate: true }));
+    dispatch(
+      getData({
+        type: 'states',
+        date: START_DAY,
+        aggregate: true,
+      })
+    );
   }, []);
 
   return (
