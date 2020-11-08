@@ -8,7 +8,7 @@ const MapKey = () => {
   const fipsData = useSelector((state) => state.dataSlice.dataByFips);
   const selectedMapType = useSelector((state) => state.mapSlice.casesNoDeaths);
   if (!fipsData) {
-    return <div>No data was sent from the server!</div>;
+    return <div className="ml-5" />;
   }
   const [maxCases, maxDeaths] = getMaximums(fipsData);
   const colorScaleCases = scaleLinear().domain([0, maxCases]).range(CASE_COLORS);

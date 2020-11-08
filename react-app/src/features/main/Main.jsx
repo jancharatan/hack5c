@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Controls from '../controls/Controls';
@@ -11,6 +12,8 @@ import { START_DAY } from '../../environment';
 const Main = () => {
   const selectedMapType = useSelector((state) => state.mapSlice.mapType);
   const dispatch = useDispatch();
+  const NYTdata = <a href="https://github.com/nytimes/covid-19-data">NYT Covid dataset</a>;
+  const censusData = <a href="https://github.com/ryanschaub/US-Census-Demographic-Data">Census demographics dataset</a>;
 
   useEffect(() => {
     dispatch(
@@ -28,6 +31,9 @@ const Main = () => {
         <FancyTitle />
         <MapKey />
         <Map mapType={selectedMapType} />
+        <div className="ml-5">
+          For this project, we used data from the {NYTdata} and a {censusData}.
+        </div>
       </div>
       <div className="w-50 h-100 overflow-hidden p-5">
         <div className="d-flex flex-column h-100 w-100 overflow-hidden">

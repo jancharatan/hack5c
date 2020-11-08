@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
+import { Spinner } from 'react-bootstrap';
 import { getMaximums } from './processFipsData';
 import stateMap from './topoJsons/us-albers.json';
 import countyMap from './topoJsons/us-albers-counties.json';
@@ -12,7 +13,16 @@ const Map = ({ mapType }) => {
   const casesNoDeaths = useSelector((state) => state.mapSlice.casesNoDeaths);
   const fipsData = useSelector((state) => state.dataSlice.dataByFips);
   if (!fipsData) {
-    return <div>No data was sent from the server!</div>;
+    return (
+      <div className="w-100 h-50">
+        <div className="mt-100 d-flex justify-content-center">
+          <div className="d-flex flex-column align-items-center">
+            <Spinner animation="border" />
+            <div>Loading data...</div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const [maxCases, maxDeaths] = getMaximums(fipsData);
