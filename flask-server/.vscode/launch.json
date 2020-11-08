@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "${workspaceFolder}/server.py",
+                "FLASK_APP": "${workspaceFolder}/app.py",
             },
             "args": [
                 "run",
