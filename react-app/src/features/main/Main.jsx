@@ -5,7 +5,6 @@ import { getData } from '../data/dataSlice';
 import Map from '../map/Map';
 import FancyTitle from '../text/FancyTitle';
 import MapKey from '../map/MapKey';
-import LinkControls from '../links/LinkControls';
 import { START_DAY } from '../../environment';
 
 const Main = () => {
@@ -31,10 +30,7 @@ const Main = () => {
       </div>
       <div className="w-50 h-100 overflow-hidden p-5">
         <div className="d-flex flex-column h-100 w-100 overflow-hidden">
-          <div className="d-flex flex-grow-1 overflow-hidden">
-            <Controls />
-          </div>
-          <LinkControls />
+          <Controls />
         </div>
       </div>
     </div>

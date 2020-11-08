@@ -13,7 +13,7 @@ tracker = VisualizationTracker()
 
 @app.route("/get-vis-link", methods=["POST"])
 def get_vis_link():
-    settings = request.json["settings"]
+    settings = request.json["selection"]
     link_id = tracker.save_visualization(settings)
     return {"link_id": link_id}
 

@@ -11,6 +11,7 @@ import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
 import CaseDeath from './CaseDeath';
 import { START_DAY } from '../../environment';
+import LinkControls from '../links/LinkControls';
 
 const Controls = () => {
   const dispatch = useDispatch();
@@ -28,19 +29,21 @@ const Controls = () => {
   const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
   const date = useSelector((state) => state.mapSlice.date);
 
+  const getSelection = () => ({
+    date,
+    type: mapType ? 'states' : 'counties',
+    dataType: displayType ? 'cases' : 'deaths',
+    Hispanic: hispanic,
+    White: white,
+    Black: black,
+    Asian: asian,
+    Native: nativeAm,
+    Pacific: pacific,
+    // Income: income.map((x) => x * 1000),
+  });
+
   const useFilters = () => {
-    const selection = {
-      date,
-      type: mapType ? 'states' : 'counties',
-      dataType: displayType ? 'cases' : 'deaths',
-      Hispanic: hispanic,
-      White: white,
-      Black: black,
-      Asian: asian,
-      Native: nativeAm,
-      Pacific: pacific,
-      // Income: income.map((x) => x * 1000),
-    };
+    const selection = getSelection();
     dispatch(getData(selection));
   };
 
@@ -55,86 +58,91 @@ const Controls = () => {
   };
 
   return (
-    <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
-      <h1>Visualization Controls</h1>
-      <div className="d-flex flex-row mb-3">
-        <DatePicker
-          disabled={disabled}
-          format="YYYY-MM-DD"
-          disabledDate={setDisabledDate}
-          onChange={(newDate, dateString) => handleDatePickerChange(newDate, dateString)}
-          defaultValue={moment(START_DAY, 'YYYY-MM-DD')}
-        />
-        <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
-        <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
+    <>
+      <div className="d-flex flex-grow-1 overflow-hidden">
+        <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
+          <h1>Visualization Controls</h1>
+          <div className="d-flex flex-row mb-3">
+            <DatePicker
+              disabled={disabled}
+              format="YYYY-MM-DD"
+              disabledDate={setDisabledDate}
+              onChange={(newDate, dateString) => handleDatePickerChange(newDate, dateString)}
+              defaultValue={moment(START_DAY, 'YYYY-MM-DD')}
+            />
+            <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
+            <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
+          </div>
+          <Button onClick={useFilters} className="btn-striped w-100 mb-5" size="lg">
+            <h1 className="m-0">Visualize!</h1>
+          </Button>
+          <div className="d-flex flow-row">
+            <h2>Filters</h2>
+          </div>
+          <FilterCategory title="Income" className="py-2">
+            <Filter
+              value={income}
+              setValue={(newValue) => setIncome(newValue)}
+              min={0}
+              max={124}
+              units="k USD"
+              title="Median Annual Household Income"
+            />
+          </FilterCategory>
+          <FilterCategory title="Race and Ethnicity" className="pt-2">
+            <Filter
+              value={white}
+              setValue={(newValue) => setWhite(newValue)}
+              min={0}
+              max={100}
+              units="%"
+              title="White Population"
+            />
+            <Filter
+              value={black}
+              setValue={(newValue) => setBlack(newValue)}
+              min={0}
+              max={86}
+              units="%"
+              title="Black/African American Population"
+            />
+            <Filter
+              value={hispanic}
+              setValue={(newValue) => setHispanic(newValue)}
+              min={0}
+              max={100}
+              units="%"
+              title="Hispanic Population"
+            />
+            <Filter
+              value={asian}
+              setValue={(newValue) => setAsian(newValue)}
+              min={0}
+              max={42}
+              units="%"
+              title="Asian American Population"
+            />
+            <Filter
+              value={nativeAm}
+              setValue={(newValue) => setNativeAm(newValue)}
+              min={0}
+              max={93}
+              units="%"
+              title="Native American Population"
+            />
+            <Filter
+              value={pacific}
+              setValue={(newValue) => setPacific(newValue)}
+              min={0}
+              max={36}
+              units="%"
+              title="Pacific Islander Population"
+            />
+          </FilterCategory>
+        </div>
       </div>
-      <Button onClick={useFilters} className="btn-striped w-100 mb-5" size="lg">
-        <h1 className="m-0">Visualize!</h1>
-      </Button>
-      <div className="d-flex flow-row">
-        <h2>Filters</h2>
-      </div>
-      <FilterCategory title="Income" className="py-2">
-        <Filter
-          value={income}
-          setValue={(newValue) => setIncome(newValue)}
-          min={0}
-          max={124}
-          units="k USD"
-          title="Median Annual Household Income"
-        />
-      </FilterCategory>
-      <FilterCategory title="Race and Ethnicity" className="pt-2">
-        <Filter
-          value={white}
-          setValue={(newValue) => setWhite(newValue)}
-          min={0}
-          max={100}
-          units="%"
-          title="White Population"
-        />
-        <Filter
-          value={black}
-          setValue={(newValue) => setBlack(newValue)}
-          min={0}
-          max={86}
-          units="%"
-          title="Black/African American Population"
-        />
-        <Filter
-          value={hispanic}
-          setValue={(newValue) => setHispanic(newValue)}
-          min={0}
-          max={100}
-          units="%"
-          title="Hispanic Population"
-        />
-        <Filter
-          value={asian}
-          setValue={(newValue) => setAsian(newValue)}
-          min={0}
-          max={42}
-          units="%"
-          title="Asian American Population"
-        />
-        <Filter
-          value={nativeAm}
-          setValue={(newValue) => setNativeAm(newValue)}
-          min={0}
-          max={93}
-          units="%"
-          title="Native American Population"
-        />
-        <Filter
-          value={pacific}
-          setValue={(newValue) => setPacific(newValue)}
-          min={0}
-          max={36}
-          units="%"
-          title="Pacific Islander Population"
-        />
-      </FilterCategory>
-    </div>
+      <LinkControls getSelection={getSelection} />
+    </>
   );
 };
 
