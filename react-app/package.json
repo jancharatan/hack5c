@@ -1,6 +1,9 @@
 {
   "name": "react-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.x"
+  },
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
