@@ -55,9 +55,29 @@ state_dems = (
 
 states_merged = pd.merge(state_dems, states, how="left", on=["state"])
 states_merged[
-    ["cases", "deaths", "Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
+    [
+        "cases",
+        "deaths",
+        "Hispanic",
+        "White",
+        "Black",
+        "Native",
+        "Asian",
+        "Pacific",
+        "Income",
+    ]
 ] = states_merged[
-    ["cases", "deaths", "Hispanic", "White", "Black", "Native", "Asian", "Pacific"]
+    [
+        "cases",
+        "deaths",
+        "Hispanic",
+        "White",
+        "Black",
+        "Native",
+        "Asian",
+        "Pacific",
+        "Income",
+    ]
 ].div(
     states_merged.TotalPop, axis=0
 )
@@ -155,4 +175,4 @@ def getMatchingFips(constraints, toggle):
     return {"data": list(set(sorted_data["fips"]))}
 
 
-# print(getMatchingFips({'Asian' : [10, 20], 'White' : [30, 100]}, 'county'))
+print(getMatchingFips({"Asian": [10, 20], "White": [30, 100]}, "county"))
