@@ -7,8 +7,15 @@ const mapSlice = createSlice({
     date: '2020-11-05',
     mapType: true,
     casesNoDeaths: true,
+    caption: undefined,
+    title: undefined,
   },
   reducers: {
+    setTitleAndCaption(state, { payload }) {
+      const { title, caption } = payload;
+      state.caption = caption;
+      state.title = title;
+    },
     setMapType(state, { payload }) {
       state.mapType = payload;
     },
@@ -27,6 +34,13 @@ const mapSlice = createSlice({
   },
 });
 
-export const { toggleMapType, toggleCasesNoDeaths, setDate, setMapType, setCaseDeathType } = mapSlice.actions;
+export const {
+  toggleMapType,
+  toggleCasesNoDeaths,
+  setDate,
+  setMapType,
+  setCaseDeathType,
+  setTitleAndCaption,
+} = mapSlice.actions;
 
 export default mapSlice.reducer;

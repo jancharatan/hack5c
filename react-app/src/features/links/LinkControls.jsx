@@ -32,7 +32,7 @@ const LinkControls = ({ getSelection }) => {
         Get Visualization Link
       </Button>
       <Button onClick={() => setShowModal(!showModal)} className="ml-2">
-        Add a Comment to Your Visualization.
+        Add a Title and Caption
       </Button>
     </div>
   );

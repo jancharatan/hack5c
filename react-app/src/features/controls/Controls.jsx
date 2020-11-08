@@ -5,7 +5,14 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { toggleMapType, toggleCasesNoDeaths, setDate, setMapType, setCaseDeathType } from '../map/mapSlice';
+import {
+  toggleMapType,
+  toggleCasesNoDeaths,
+  setDate,
+  setMapType,
+  setCaseDeathType,
+  setTitleAndCaption,
+} from '../map/mapSlice';
 import { getData, setDataByFips, setDataFetchInProgress } from '../data/dataSlice';
 import 'antd/dist/antd.css';
 import Filter from './Filter';
@@ -60,7 +67,7 @@ const Controls = (props) => {
           dispatch(setDataFetchInProgress(false));
 
           // make the sliders correct
-          // TODO add income
+          setIncome(settings.Income);
           setHispanic(settings.Hispanic);
           setWhite(settings.White);
           setBlack(settings.Black);
@@ -70,10 +77,16 @@ const Controls = (props) => {
           dispatch(setDate(settings.date));
           dispatch(setMapType(settings.type === 'states'));
           dispatch(setCaseDeathType(settings.dataType === 'cases'));
+          dispatch(
+            setTitleAndCaption({
+              title: settings?.title ?? '',
+              caption: settings?.caption ?? '',
+            })
+          );
         })
         .catch(() => {
           // eslint-disable-next-line no-alert
-          alert('Invalid visualization URL.');
+          alert('Something went wrong: Invalid visualization URL.');
         });
     } else {
       dispatch(
@@ -90,6 +103,8 @@ const Controls = (props) => {
   const mapType = useSelector((state) => state.mapSlice.mapType);
   const displayType = useSelector((state) => state.mapSlice.casesNoDeaths);
   const date = useSelector((state) => state.mapSlice.date);
+  const title = useSelector((state) => state.mapSlice.title);
+  const caption = useSelector((state) => state.mapSlice.caption);
 
   const getSelection = () => ({
     date,
@@ -101,7 +116,9 @@ const Controls = (props) => {
     Asian: asian,
     Native: nativeAm,
     Pacific: pacific,
-    // Income: income.map((x) => x * 1000),
+    Income: income.map((x) => x * 1000),
+    title,
+    caption,
   });
 
   const useFilters = () => {
