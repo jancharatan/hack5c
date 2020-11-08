@@ -11,10 +11,12 @@ import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
 import CaseDeath from './CaseDeath';
 import { START_DAY } from '../../environment';
+import DateSlider from './Slider';
 
 const Controls = () => {
   const dispatch = useDispatch();
 
+  const [stateDate, setStateDate] = useState(0);
   const [income, setIncome] = useState([0, 400]);
   const [white, setWhite] = useState([0, 100]);
   const [black, setBlack] = useState([0, 100]);
@@ -60,6 +62,16 @@ const Controls = () => {
         />
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
         <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
+      </div>
+      <div>
+        <DateSlider
+          defaultValue={moment('2020-11-05', 'DD-MM-YYYY').valueOf()}
+          min={moment('2020-03-17', 'DD-MM-YYYY').valueOf()}
+          max={moment('2020-11-06', 'DD-MM-YYYY').valueOf()}
+          title="Date Picker"
+          setValue={(newValue) => setStateDate(moment('2020-03-17', 'DD-MM-YYYY').add('DD-MM-YYYY', newValue))}
+          value={stateDate}
+        />
       </div>
       <div className="d-flex flow-row">
         <h2>Filters</h2>
