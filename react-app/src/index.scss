@@ -13,7 +13,7 @@ body,
 }
 
 $theme-colors: (
-  "primary": #d4e6ff,
+  "primary": #bbc94d,
 );
 
 @import 'node_modules/bootstrap/scss/bootstrap';
@@ -41,3 +41,7 @@ h3 {
   overflow: hidden;
 }
 
+.btn-striped {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+  background-size: 20px 20px;
+}

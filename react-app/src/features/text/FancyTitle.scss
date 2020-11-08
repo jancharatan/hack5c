@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;900&display=swap');
 
 $stroke: #0d1b1e;
-$shadow: #cccccc;
+$shadow: #bbc94d;
 $size: 4rem;
 $halftone: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAHElEQVQYV2NUVFT8f//+fUYGBgYGMAEDcA5IBQCKJQVmn76DhAAAAABJRU5ErkJggg==");
 
@@ -24,7 +24,7 @@ $halftone: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKL
   @include stroke-color($stroke);
   color: transparent;
 
-  text-shadow: 4px 4px $shadow;
+  text-shadow: 3px 3px $shadow;
 }
 
 .subheading {

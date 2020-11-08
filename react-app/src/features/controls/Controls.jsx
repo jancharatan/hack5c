@@ -57,7 +57,7 @@ const Controls = () => {
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Visualization Controls</h1>
-      <div className="d-flex flex-row mb-4">
+      <div className="d-flex flex-row mb-3">
         <DatePicker
           disabled={disabled}
           format="YYYY-MM-DD"
@@ -68,12 +68,11 @@ const Controls = () => {
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
         <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
       </div>
+      <Button onClick={useFilters} className="btn-striped w-100 mb-5" size="lg">
+        <h1 className="m-0">Visualize!</h1>
+      </Button>
       <div className="d-flex flow-row">
         <h2>Filters</h2>
-        <Button onClick={useFilters} className="ml-2" size="sm">
-          {' '}
-          Visualize using these filters
-        </Button>
       </div>
       <FilterCategory title="Income" className="py-2">
         <Filter
