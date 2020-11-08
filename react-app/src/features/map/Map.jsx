@@ -6,6 +6,7 @@ import { scaleLinear } from 'd3-scale';
 import { getMaximums } from './processFipsData';
 import stateMap from './topoJsons/us-albers.json';
 import countyMap from './topoJsons/us-albers-counties.json';
+import { CASE_COLORS, DEATH_COLORS } from '../../environment';
 
 const Map = ({ mapType }) => {
   const casesNoDeaths = useSelector((state) => state.mapSlice.casesNoDeaths);
@@ -15,8 +16,8 @@ const Map = ({ mapType }) => {
   }
 
   const [maxCases, maxDeaths] = getMaximums(fipsData);
-  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(['#ffedea', '#ff5233']);
-  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(['#BFBFFF', '#0000FF']);
+  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(CASE_COLORS);
+  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(DEATH_COLORS);
 
   return (
     <ComposableMap projection="geoAlbersUsa">

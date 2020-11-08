@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { scaleLinear } from 'd3-scale';
 import { getMaximums } from './processFipsData';
+import { CASE_COLORS, DEATH_COLORS } from '../../environment';
 
 const MapKey = () => {
   const fipsData = useSelector((state) => state.dataSlice.dataByFips);
@@ -10,8 +11,8 @@ const MapKey = () => {
     return <div>No data was sent from the server!</div>;
   }
   const [maxCases, maxDeaths] = getMaximums(fipsData);
-  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(['#ffedea', '#ff5233']);
-  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(['#BFBFFF', '#0000FF']);
+  const colorScaleCases = scaleLinear().domain([0, maxCases]).range(CASE_COLORS);
+  const colorScaleDeaths = scaleLinear().domain([0, maxDeaths]).range(DEATH_COLORS);
 
   const colorFunction = selectedMapType ? colorScaleCases : colorScaleDeaths;
   const maxValue = selectedMapType ? maxCases : maxDeaths;

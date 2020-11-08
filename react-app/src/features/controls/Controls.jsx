@@ -11,12 +11,10 @@ import FilterCategory from './FilterCategory';
 import StateCounty from './StateCounty';
 import CaseDeath from './CaseDeath';
 import { START_DAY } from '../../environment';
-import DateSlider from './Slider';
 
 const Controls = () => {
   const dispatch = useDispatch();
 
-  const [stateDate, setStateDate] = useState(0);
   const [income, setIncome] = useState([0, 400]);
   const [white, setWhite] = useState([0, 100]);
   const [black, setBlack] = useState([0, 100]);
@@ -59,7 +57,7 @@ const Controls = () => {
   return (
     <div className="w-100 h-100 rounded border p-3 overflow-y-scroll" style={{ backgroundColor: 'white' }}>
       <h1>Visualization Controls</h1>
-      <div className="d-flex flex-row mb-4">
+      <div className="d-flex flex-row mb-3">
         <DatePicker
           disabled={disabled}
           format="YYYY-MM-DD"
@@ -70,22 +68,11 @@ const Controls = () => {
         <CaseDeath value={displayType} setValue={() => dispatch(toggleCasesNoDeaths())} />
         <StateCounty value={mapType} setValue={() => dispatch(toggleMapType())} />
       </div>
-      <div>
-        <DateSlider
-          defaultValue={moment('2020-11-05', 'DD-MM-YYYY').valueOf()}
-          min={moment('2020-03-17', 'DD-MM-YYYY').valueOf()}
-          max={moment('2020-11-06', 'DD-MM-YYYY').valueOf()}
-          title="Date Picker"
-          setValue={(newValue) => setStateDate(moment('2020-03-17', 'DD-MM-YYYY').add('DD-MM-YYYY', newValue))}
-          value={stateDate}
-        />
-      </div>
+      <Button onClick={useFilters} className="btn-striped w-100 mb-5" size="lg">
+        <h1 className="m-0">Visualize!</h1>
+      </Button>
       <div className="d-flex flow-row">
         <h2>Filters</h2>
-        <Button onClick={useFilters} className="ml-2" size="sm">
-          {' '}
-          Visualize using these filters
-        </Button>
       </div>
       <FilterCategory title="Income" className="py-2">
         <Filter
