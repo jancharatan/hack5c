@@ -4,13 +4,9 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simp
 import PropTypes from 'prop-types';
 import { scaleLinear } from 'd3-scale';
 import { getMaximums } from './processFipsData';
+import stateMap from './topoJsons/us-albers.json';
+import countyMap from './topoJsons/us-albers-counties.json';
 import { CASE_COLORS, DEATH_COLORS } from '../../environment';
-
-const geoUrlCounties =
-  'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json';
-
-const geoUrlStates =
-  'https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers.json';
 
 const Map = ({ mapType }) => {
   const casesNoDeaths = useSelector((state) => state.mapSlice.casesNoDeaths);
@@ -26,7 +22,7 @@ const Map = ({ mapType }) => {
   return (
     <ComposableMap projection="geoAlbersUsa">
       <ZoomableGroup>
-        <Geographies geography={mapType ? geoUrlStates : geoUrlCounties}>
+        <Geographies geography={mapType ? stateMap : countyMap}>
           {
             ({ geographies }) =>
               geographies.map((geo) => {
