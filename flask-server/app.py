@@ -11,6 +11,11 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 tracker = VisualizationTracker()
 
 
+@app.route("/")
+def hello():
+    return "Hello, World (api)!"
+
+
 @app.route("/get-vis-link", methods=["POST"])
 def get_vis_link():
     settings = request.json["selection"]
